@@ -1,0 +1,16 @@
+{
+  "name": "azw3-to-epub",
+  "version": "1.0.0",
+  "description": "Zero-dependency Node.js tool to convert DRM-free AZW3 (KF8) ebooks into EPUB 3 files.",
+  "type": "module",
+  "main": "azw3-to-epub.js",
+  "bin": {
+    "azw3-to-epub": "./azw3-to-epub.js"
+  },
+  "scripts": {
+    "convert": "node azw3-to-epub.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
