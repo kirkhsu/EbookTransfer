@@ -15,10 +15,12 @@
 
 ## 檔案結構
 
-- `azw3-to-epub.js`：CLI 主程式與模組匯出介面
+- `azw3-to-epub.js`：AZW3 轉 EPUB 主程式與 CLI 介面
+- `fix-epub.js`：專門修復固定版面漫畫在 Apple Books 中切半、偏移的修復工具
 - `lib/azw3-parser.js`：AZW3 / KF8 二進位格式解析器
 - `lib/epub-builder.js`：EPUB 3 / EPUB 2 封裝器
-- `lib/zip.js`：符合 EPUB 規範的 ZIP 產生器（確保首個項目為未壓縮的 `mimetype`）
+- `lib/epub-fixer.js`：EPUB 樣式修復模組（修正 `singlePage`/`twoPage` 定位）
+- `lib/zip.js`：符合 EPUB 規範的 ZIP 產生器與解析器（零相依）
 
 ## 使用方式
 
@@ -51,6 +53,27 @@ import { convertAzw3File } from "./azw3-to-epub.js";
 
 const result = convertAzw3File("input.azw3", "output.epub");
 console.log(result.metadata.title, result.stats);
+```
+
+## 修復現有 EPUB 漫畫切半問題 (`fix-epub`)
+
+專門修正從 Kindle (KF8/AZW3) 轉換為 EPUB 後，在 iPhone / iPad 的 Apple Books（WebKit 核心）中圖片向右偏移 50%、被切掉一半或無法置中的樣式定位問題：
+
+```powershell
+# 1. 檢測檔案是否存在此問題（不寫入任何變更）
+node fix-epub.js "漫畫.epub" --check
+
+# 2. 原地直接修復單一檔案
+node fix-epub.js "漫畫.epub" -i
+
+# 3. 修復單一檔案並另存新檔（預設命名為 漫畫_fixed.epub）
+node fix-epub.js "漫畫.epub"
+
+# 4. 指定修復後輸出檔名
+node fix-epub.js "漫畫.epub" -o "修正後.epub"
+
+# 5. 批次修復資料夾內所有 EPUB 並原地覆寫
+node fix-epub.js ./epubs -i -r
 ```
 
 ## 限制

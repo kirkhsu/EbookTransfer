@@ -5,10 +5,12 @@
   "type": "module",
   "main": "azw3-to-epub.js",
   "bin": {
-    "azw3-to-epub": "./azw3-to-epub.js"
+    "azw3-to-epub": "./azw3-to-epub.js",
+    "fix-epub": "./fix-epub.js"
   },
   "scripts": {
-    "convert": "node azw3-to-epub.js"
+    "convert": "node azw3-to-epub.js",
+    "fix": "node fix-epub.js"
   },
   "engines": {
     "node": ">=18.0.0"
